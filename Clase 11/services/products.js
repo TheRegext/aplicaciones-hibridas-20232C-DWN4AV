@@ -1,5 +1,7 @@
 import fs from 'node:fs/promises'
 
+const ENTITY_NAME = 'products'
+
 function notIgnore(product) {
   return product.deleted != true
 }
@@ -16,7 +18,7 @@ function filter(productsList) {
 }
 
 async function getProductFile() {
-  return fs.readFile("data/products.json", { encoding: 'utf-8' })
+  return fs.readFile(`data/${ENTITY_NAME}.json`, { encoding: 'utf-8' })
     .then(function (data) {
       const productsList = JSON.parse(data)
       return productsList;
