@@ -1,0 +1,42 @@
+.nav-principal{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.nav-principal--dark{
+  background-color: #000;
+  color: #fff;
+
+}
+
+.nav-principal li{
+  list-style: none;
+}
+
+.nav-principal__item a{
+  margin: 0 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.nav-principal__item a:hover{
+  background-color: #fff;
+  color: #000;
+}
+
+.nav-principal__item a:active{
+  transform: scale(0.9);
+}
+
+.nav-principal__item a.active{
+  background-color: #fff;
+  color: #000;
+}
+
+.nav-principal__item a.active:active{
+  transform: scale(0.9);
+}
+
