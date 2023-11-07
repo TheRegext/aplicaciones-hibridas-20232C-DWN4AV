@@ -1,5 +1,7 @@
 .nav-principal{
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
@@ -8,7 +10,6 @@
 .nav-principal--dark{
   background-color: #000;
   color: #fff;
-
 }
 
 .nav-principal li{
