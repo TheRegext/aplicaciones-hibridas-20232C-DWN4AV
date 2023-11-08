@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css' /// vitejs
+import ProductsList from './ProductsList'
 
 /// Componentes funcionales
 /// Los nombres de los componentes utilizan PascalCase
@@ -22,10 +23,10 @@ const NavBar = ({dark, links}) =>
   // const liLinks = links.map((elemnto) => <li className="nav-principal__item"><a href={elemnto.url}>{elemnto.texto}</a></li>)
 
   /*
-  /// forma estructurada
-  for(let i=0; i<links?.length; i++){
-    liLinks.push(<li className="nav-principal__item"><a href={links[i].url}>{links[i].texto}</a></li>)
-  }
+    /// forma estructurada
+    for(let i=0; i<links?.length; i++){
+      liLinks.push(<li className="nav-principal__item"><a href={links[i].url}>{links[i].texto}</a></li>)
+    }
   */
 
   return (
@@ -52,6 +53,7 @@ const Header = () => {
     {url: '#', texto: 'FAQ'},
   ])
 
+  let j;
 
   // codigo javascript
 
@@ -69,12 +71,45 @@ const Header = () => {
       <Titulo>
         <span>Titulo de mi web!</span>
       </Titulo>
-      <button onClick={handleClick} >Agregar</button>
-      <p>{links.length}</p>
+      <button onClick={handleClick}>Agregar</button>
+      { links.length < 7 &&
+        <Mensaje show={true}>
+          Mensaje oculto
+        </Mensaje>
+      }
+          
       <NavBar dark={true} links={links} />
     </header>
   )
 }
+/// Render
+// Monta el componente es el primer render
+
+// cambia el estado
+// cambia el contexto (hooks)
+// cambia las propiedades
+
+// destruye 
+
+function Mensaje({show=false, children}){
+
+  useEffect(()=>{
+    console.log("Se ejecuta cuando se monta el componente")
+
+    return ()=>{
+      console.log("Se ejecuta cuando se desmonta el componente")
+    }
+
+  }, [])
+
+
+  if(show){
+    return <p>{children}</p>
+  }
+
+  return null;
+}
+
 
 function App(){
   /// codigo javascript
@@ -83,8 +118,7 @@ function App(){
   return (
     <div>
       <Header />
-      <h2>Subtitulo</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero autem beatae recusandae asperiores minus aut sapiente molestias dolorem deleniti inventore nostrum consectetur velit animi dicta omnis iste voluptates! Praesentium.</p>
+      <ProductsList />
     </div>
   )
 }

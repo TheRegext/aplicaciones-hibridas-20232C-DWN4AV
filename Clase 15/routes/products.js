@@ -6,7 +6,7 @@ import { validateCreateProduct } from '../middlewares/products.js'
 
 const route = express.Router()
 
-route.get('/products', [], ProductsController.getProducts)
+route.get('/products', ProductsController.getProducts)
 route.post('/products', [validateCreateProduct], ProductsController.createProduct)
 route.get('/products/:idProduct', ProductsController.getProductByID)
 

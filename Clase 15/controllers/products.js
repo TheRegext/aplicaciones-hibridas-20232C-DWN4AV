@@ -2,8 +2,6 @@ import ProductsService from "../services/products.js"
 
 function getProducts(req, res) {
 
-  console.log("User Data: ", req.user)
-
   ProductsService.getProducts(req.query)
     .then(function (products) {
       res.status(200).json(products)

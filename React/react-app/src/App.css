@@ -41,3 +41,10 @@
   transform: scale(0.9);
 }
 
+
+
+
+.products-list{
+  display: flex;
+  
+}
