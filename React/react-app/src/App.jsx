@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react'
 import './App.css' /// vitejs
 import ProductsList from './ProductsList'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import NotFoundPage from './pages/NotFoundPage'
+import ProductViewPage from './pages/ProductViewPage'
+
+import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom'
 
 /// Componentes funcionales
 /// Los nombres de los componentes utilizan PascalCase
@@ -32,7 +38,9 @@ const NavBar = ({dark, links}) =>
   return (
   <nav>
     <ul className={className}>
-      {links.map((elemnto, index) => <li key={index} className="nav-principal__item"><a href={elemnto.url}>{elemnto.texto}</a></li>)}
+      {links.map((elemnto, index) => <li key={index} className="nav-principal__item">
+        <Link to={elemnto.url}>{elemnto.texto}</Link>
+        </li>)}
     </ul>
   </nav>
 )}
@@ -47,10 +55,11 @@ const Titulo = ({children})=>{
 const Header = () => {
   console.log("Renderizado de Header")
   const [links, setLinks] = useState([
-    {url: '#', texto: 'Home'},
-    {url: '#', texto: 'Nosotros'},
-    {url: '#', texto: 'Contacto'},
-    {url: '#', texto: 'FAQ'},
+    {url: '/', texto: 'Home'},
+    {url: '/products', texto: "Productos"},
+    {url: '/about', texto: 'Nosotros'},
+    {url: '/contact', texto: 'Contacto'},
+    {url: '/faq', texto: 'FAQ'},
   ])
 
   let j;
@@ -111,17 +120,63 @@ function Mensaje({show=false, children}){
 }
 
 
-function App(){
-  /// codigo javascript
-  console.log("Renderizado App")
 
+
+
+
+function AppMain(){
   return (
     <div>
       <Header />
-      <ProductsList />
+      <h1>App Main</h1>
+      <Outlet />
     </div>
   )
 }
+
+const route = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppMain />,
+    errorElement: <NotFoundPage />,
+    children:[
+      {
+        path: 'products',
+        element: <Outlet />,
+        children:[
+          {
+           path: '',
+           element: <ProductsList />
+          },{
+            path: ':idProduct',
+            element: <ProductViewPage />
+          }
+        ]
+
+      },
+      {
+        path: 'about',
+        element: <AboutPage />
+      },
+      {
+        path: 'contact',
+        element: <ContactPage />
+      }
+    ]
+  },
+  {
+    
+  }
+])
+
+function App(){
+  return <>
+    
+    <RouterProvider router={route} />
+  </>
+}
+
+
 
 export {
   App,

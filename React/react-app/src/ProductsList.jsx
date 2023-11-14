@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import ProductView from "./ProductView"
+import { Link } from "react-router-dom"
 
 
 function ProductsList({}){
@@ -38,7 +39,10 @@ function ProductsList({}){
     <div className="products-list">
     <ul>
     {
-      products.map((product) => <li key={product._id} onClick={()=> setProductId(product._id)}>{product.name}</li>)
+      products.map((product) => 
+      <li key={product._id}>
+        <Link to={`/products/${product._id}`}>{product.name}</Link>
+      </li>)
     }
     </ul>
     <ProductView product_id={product_id} />
