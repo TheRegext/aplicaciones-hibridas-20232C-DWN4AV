@@ -20,7 +20,7 @@ export function verifySession(req, res, next) {
   const token = req.headers['auth-token']
 
   if (!token) {
-    return res.status(404).json({ msg: "No se encuentra el token" })
+    return res.status(401).json({ msg: "No se encuentra el token" })
   }
 
   accountServices.verifyToken(token)
@@ -30,7 +30,7 @@ export function verifySession(req, res, next) {
       next()
     })
     .catch(() => {
-      return res.status(404).json({ msg: "El Token no es valido" })
+      return res.status(401).json({ msg: "El Token no es valido" })
     })
 
 }

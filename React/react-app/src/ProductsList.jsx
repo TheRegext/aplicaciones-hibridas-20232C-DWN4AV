@@ -1,16 +1,30 @@
 import { useState, useEffect } from "react"
 import ProductView from "./ProductView"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 function ProductsList({}){
   const [products, setProducts] = useState([])
   const [error, setError] = useState("")
   const [product_id, setProductId] = useState(0)
+  const navigate = useNavigate()
 
   useEffect(()=>{
-    fetch('http://localhost:2023/products')
-    .then((response) => response.json())
+    fetch('http://localhost:2023/products',{
+      method: 'GET',
+      headers: {
+        'auth-token': localStorage.getItem('token')
+      }
+    })
+    .then((response) =>{
+      if(response.ok){
+        return response.json()
+      }
+      else if(response.status == 401){
+        navigate('/login', {replace: true})
+        return {}
+      }
+    })
     .then((data) =>{
       setProducts(data)
     })  

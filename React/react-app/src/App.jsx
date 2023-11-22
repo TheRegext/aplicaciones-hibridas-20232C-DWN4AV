@@ -5,6 +5,9 @@ import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProductViewPage from './pages/ProductViewPage'
+import LoginPage from './pages/LoginPage'
+import RoutePrivate from './components/RoutePrivate'
+
 
 import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom'
 
@@ -38,9 +41,15 @@ const NavBar = ({dark, links}) =>
   return (
   <nav>
     <ul className={className}>
-      {links.map((elemnto, index) => <li key={index} className="nav-principal__item">
-        <Link to={elemnto.url}>{elemnto.texto}</Link>
-        </li>)}
+      {links.map((elemnto, index) => {
+        if(elemnto.private && !localStorage.getItem('token')){
+          return null
+        }
+        
+        return <li key={index} className="nav-principal__item">
+          <Link to={elemnto.url}>{elemnto.texto}</Link>
+        </li>}
+        )}
     </ul>
   </nav>
 )}
@@ -55,8 +64,8 @@ const Titulo = ({children})=>{
 const Header = () => {
   console.log("Renderizado de Header")
   const [links, setLinks] = useState([
-    {url: '/', texto: 'Home'},
-    {url: '/products', texto: "Productos"},
+    {url: '/', texto: 'Home', },
+    {url: '/products', texto: "Productos", private:true},
     {url: '/about', texto: 'Nosotros'},
     {url: '/contact', texto: 'Contacto'},
     {url: '/faq', texto: 'FAQ'},
@@ -120,10 +129,6 @@ function Mensaje({show=false, children}){
 }
 
 
-
-
-
-
 function AppMain(){
   return (
     <div>
@@ -142,7 +147,7 @@ const route = createBrowserRouter([
     children:[
       {
         path: 'products',
-        element: <Outlet />,
+        element: <RoutePrivate><Outlet /></RoutePrivate>,
         children:[
           {
            path: '',
@@ -165,7 +170,8 @@ const route = createBrowserRouter([
     ]
   },
   {
-    
+    path: '/login',
+    element: <LoginPage />
   }
 ])
 

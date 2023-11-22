@@ -6,10 +6,14 @@ import { verifySession } from '../middlewares/account.js'
 
 const route = express.Router()
 
-route.get('/products', [verifySession], ProductsController.getProducts)
-route.post('/products', [validateCreateProduct], ProductsController.createProduct)
-route.get('/products/:idProduct', ProductsController.getProductByID)
+route.use('/products', [verifySession])
 
+// route.all('/products', [verifySession])
+
+route.get('/products', ProductsController.getProducts)
+route.post('/products', [validateCreateProduct], ProductsController.createProduct)
+
+route.get('/products/:idProduct', ProductsController.getProductByID)
 route.use('/products', ProductsReviewRoute)
 
 

@@ -4,7 +4,12 @@ function ProductView({product_id}){
   const [product, setProduct] = useState({})
 
   useEffect(()=>{
-    fetch(`http://localhost:2023/products/${product_id}`)
+    fetch(`http://localhost:2023/products/${product_id}`,{
+      method: 'GET',
+      headers: {
+        'auth-token': localStorage.getItem('token')
+      }
+    })
     .then((response) => response.json())
     .then((data)=>{
       setProduct(data)
